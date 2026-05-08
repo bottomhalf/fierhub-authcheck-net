@@ -8,8 +8,9 @@ namespace Fierhub.Service.Library.Model
         public string RefreshToken { get; set; } = null;
         public string ErrorMessage { get; set; }
         public string ErrorCode { get; set; }
+        public string RefreshTokenCorelationId { get; set; } = null;
 
-        public static FierhubAuthResponse Ok(dynamic Data, string Resion = null, string Token = null, string RefreshToken = null)
+        public static FierhubAuthResponse Ok(dynamic Data, string Resion = null, string Token = null, string RefreshToken = null, string RefreshTokenCorelationId = null)
         {
             return new FierhubAuthResponse
             {
@@ -17,7 +18,8 @@ namespace Fierhub.Service.Library.Model
                 RefreshToken = RefreshToken,
                 HttpStatusMessage = Resion,
                 HttpStatusCode = HttpStatusCode.OK,
-                ResponseBody = Data
+                ResponseBody = Data,
+                RefreshTokenCorelationId = RefreshTokenCorelationId
             };
         }
 
