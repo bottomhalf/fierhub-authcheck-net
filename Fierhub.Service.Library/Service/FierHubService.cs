@@ -33,9 +33,9 @@ namespace Fierhub.Service.Library.Service
             return await Generate(claimData: claims, audiance: audiance, roles: roles);
         }
 
-        public async Task<FierhubAuthResponse> GenerateToken(object claims, string audiance, string userId, List<string> roles)
+        public async Task<FierhubAuthResponse> GenerateToken(object claims, string audiance, string subject, string userId, List<string> roles)
         {
-            return await Generate(claims, audiance, userId, roles);
+            return await Generate(claims, audiance, subject, userId, roles);
         }
 
         public async Task<T> ReadConfiguration<T>(string fileCode)
@@ -59,7 +59,7 @@ namespace Fierhub.Service.Library.Service
             return content;
         }
 
-        public async Task<FierhubAuthResponse> Generate(object claimData, string audiance, string userId = null, List<string> roles = null, string device = "web")
+        public async Task<FierhubAuthResponse> Generate(object claimData, string audiance, string subject = null, string userId = null, List<string> roles = null, string device = "web")
         {
             var claims = ConvertObjectToDictionary(claimData);
 
@@ -77,6 +77,7 @@ namespace Fierhub.Service.Library.Service
                 Key = jwtSecret.Key,
                 Audiance = audiance,
                 RefreshTokenExpiryTimeInSeconds = jwtSecret.RefreshTokenExpiryTimeInSeconds,
+                Subject = subject
             };
 
             var result = await _fierhubServiceRequest.PostRequestAsync<FierhubAuthResponse>(
